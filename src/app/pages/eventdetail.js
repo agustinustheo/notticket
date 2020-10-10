@@ -124,14 +124,17 @@ class EventDetailPage extends Component {
         super(props)
       
         this.state = {
-            name: "Arya",
-            email: "arya.surya021@gmail.com",
-            avatar: "",
-            eventName: "Mama Dede Concerto #12",
-            eventDate: "11th October 2020",
-            eventPrice: "Rp. 205.000",
-            venueName: "Zoom",
-            link: "https://zoom"
+            data: [{
+                name: "Arya",
+                email: "arya.surya021@gmail.com",
+                avatar: "",
+                eventName: "Mama Dede Concerto #12",
+                eventDate: "11th October 2020",
+                eventPrice: "Rp. 205.000",
+                venueName: "Zoom",
+                link: "https://zoom",
+                eventID: "279004587896078856"
+            }]
         }
     }
 
@@ -141,29 +144,42 @@ class EventDetailPage extends Component {
     }
 
     async fetchData(id){
-        let response = await fetch("")
+       
+    }
+
+    handleCheckOut(eventID){
+        console.log("clicked"+ eventID)
+        this.props.history.push({
+            pathname: "/ticket",
+            state: {
+                eventID
+            }
+        })
     }
 
     render(){
         return(
-                <Flex>
+            this.state.data.map((event) => {
+                return(
+                <Flex key={event.eventID}>
                     <OneThirdFlex><img src={backgroundarya} alt="Concert"/></OneThirdFlex>
                     <TwoThirdFlex>
-                        <TitleContainer><SmallTitle>{this.state.eventName}</SmallTitle></TitleContainer>
+                        <TitleContainer><SmallTitle>{event.eventName}</SmallTitle></TitleContainer>
                         <FlexContainer>
-                            <Item><SmallSubTitle><MdLocationOn/> {this.state.venueName}</SmallSubTitle></Item>
-                            <Item><SmallSubTitle><MdDateRange/>  {this.state.eventDate}</SmallSubTitle></Item>
-                            <Item><SmallSubTitle><MdAttachMoney/> {this.state.eventPrice}</SmallSubTitle></Item>
+                            <Item><SmallSubTitle><MdLocationOn/> {event.venueName}</SmallSubTitle></Item>
+                            <Item><SmallSubTitle><MdDateRange/>  {event.eventDate}</SmallSubTitle></Item>
+                            <Item><SmallSubTitle><MdAttachMoney/> {event.eventPrice}</SmallSubTitle></Item>
                             <XFlex>
                                 <Button>#Mama</Button> 
                                 <Button>#LastConcerto</Button> 
                                 <Button>#Concert Mama</Button>
                             </XFlex>
                         </FlexContainer>
-                        <LinkButton>CHECK OUT</LinkButton>
+                        <LinkButton onClick={() => this.handleCheckOut(event.eventID)}>CHECK OUT</LinkButton>
                     </TwoThirdFlex>
                 </Flex>
-          
+            )
+            })
         )
     }
 }

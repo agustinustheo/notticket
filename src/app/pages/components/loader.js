@@ -14,7 +14,7 @@ const SpinningAnimation = keyframes`
 const LoaderContainer = styled.div`
     position: fixed;
     z-index:9999;
-    background:#D3D3D3;
+    background:#FFC20F;
     padding:3.5rem;
     border-radius: 30px;
     box-shadow: 1rem 1rem 2rem rgba(0.5);

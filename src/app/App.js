@@ -29,9 +29,7 @@ function App() {
           <Route path="/checkout/:id">
             <EventDetailPage/>
           </Route>
-          <Route path="/ticket">
-            <TicketPage/>
-          </Route>
+          <Route path="/ticket" render={(props) => <TicketPage {...props}/>}/>
           <Route path="/">
             <LoginPage/>
           </Route>

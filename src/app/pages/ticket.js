@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
+import { BaseURL } from '../constant/variables'
+import Loader from "../pages/components/loader";
 
 const Flex = styled.div`
     position: absolute;
@@ -10,7 +12,6 @@ const Flex = styled.div`
     flex:3;
     width:80%;
     margin: 0 auto;
-    background:black;
     display:flex;
     height: 40rem;
     align-items:center;
@@ -19,7 +20,6 @@ const Flex = styled.div`
 
 const OneThirdFlex = styled.div`
     flex:1;
-    background:black;
     height: 100%;
     align-items:center;
     flex-direction: column;
@@ -28,7 +28,6 @@ const OneThirdFlex = styled.div`
 const TwoThirdFlex = styled.div`
     position:relative;
     flex:2;
-    background:black;
     height: 100%;
     display:flex;
     flex-direction: column;
@@ -64,6 +63,8 @@ const YFlex = styled.div`
 const TicketContainer = styled.div`
     position:absolute;
     display: flex;
+    background:black;
+    box-shadow: 0 0 2rem #FFC20F;
     justify-content: space-between;
     top:50%;
     left: 50%;
@@ -115,7 +116,6 @@ const Background = styled.div`
     height:100vh;
     width:100vw;
     overflow-y:hidden;
-    background: black;
     color: white;
 `
 
@@ -159,27 +159,67 @@ const LinkButton = styled.button`
     }
 `
 
+const LoadingContainer = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
+    height: 100%;
+    align-items: center;
+    z-index: 99;
+    position: fixed;
+`
+
+
 export default class TicketPage extends Component {
+    
     constructor(props){
         super(props)
         this.state = {
             name: "Arya",
             email: "arya.surya021@gmail.com",
             avatar: "",
+            eventID: "",
             eventName: "Mama Dede Concerto #12",
             eventDate: "11th October 2020",
-            venueName: "Zoom",
-            link: "https://zoom"
+            eventVenue: "Zoom",
+            eventLink: "https://zoom",
+            eventTags: [],
+            isError: false,
+            isLoading: false
         }
         
     }
   
-    componentDidMount(){
-        //TODO : HIT API
+    async componentDidMount(){
+        try{
+            this.setState({
+                isLoading: true
+            })
+            let id = this.props.history.location.state.eventID
+            let response = await fetch(`${BaseURL}/concert`, { method: 'POST', body: 
+                JSON.stringify(id)
+            })
+            let decodedData = await response.json() 
+            console.log(decodedData)
+            this.setState({
+                eventID: decodedData.id,
+                eventName: decodedData.event_name,
+                eventVenue: decodedData.event_venue,
+                eventDate: decodedData.event_date,
+                eventLink: decodedData.event_link,
+                isLoading: false
+            })
+        }
+        catch(err){
+            this.setState({
+                isError: true
+            })
+        }
     }
 
     render(){
         return(
+            this.state.isLoading ?  <LoadingContainer><Loader/></LoadingContainer> :
             <Background>
                 <Flex>
                     <OneThirdFlex>
@@ -202,7 +242,7 @@ export default class TicketPage extends Component {
                                 <YFlex>
                                     <LeftSpace>
                                         <SubTitle>{this.state.eventName}</SubTitle>
-                                        <SmallSubtitle>Venue : {this.state.venueName}</SmallSubtitle>
+                                        <SmallSubtitle>Venue : {this.state.eventVenue}</SmallSubtitle>
                                         <SmallSubtitle>Date  : {this.state.eventDate}</SmallSubtitle>
                                     </LeftSpace>
                                 </YFlex>
@@ -212,7 +252,7 @@ export default class TicketPage extends Component {
                                     <Button><FaTwitter/>&nbsp;&nbsp;Tweet</Button>   
                                 </XFlex>
                             </YFlex>
-                            <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>
+                            <LeftBorderedFlex><Rotated>No {this.state.eventID.substring(0,7)}</Rotated></LeftBorderedFlex>
                         </TicketContainer>
                     </TwoThirdFlex>
                 </Flex>
