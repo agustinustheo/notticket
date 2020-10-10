@@ -32,6 +32,7 @@ const TwoThirdFlex = styled.div`
     height: 100%;
     display:flex;
     flex-direction: column;
+    perspective: 4rem;
 `
 
 const Title = styled.h2`
@@ -170,8 +171,9 @@ export default class TicketPage extends Component {
             venueName: "Zoom",
             link: "https://zoom"
         }
+        
     }
-
+  
     componentDidMount(){
         //TODO : HIT API
     }
@@ -179,41 +181,41 @@ export default class TicketPage extends Component {
     render(){
         return(
             <Background>
-            <Flex>
-                <OneThirdFlex>
-                    <Title>You're In.</Title>
-                    <br/>
-                    <SubTitle>Share Your Ticket to Social Media to jazz up the concert!</SubTitle>
-                    <LinkButton>COPY TICKET URL</LinkButton>
-                </OneThirdFlex>
-                <TwoThirdFlex>
-                    <TicketContainer>
-                        <YFlex>
-                            <PureFlex>
-                            <Avatar><img src="https://github.com/aryasurya21.png" alt="aryasurya21"/></Avatar>
-                            <LeftSpace>
-                                <SmallTitle>{this.state.name}</SmallTitle>
-                                <br/>
-                                <SmallSubtitle>{this.state.email}</SmallSubtitle>
-                            </LeftSpace>
-                            </PureFlex>
+                <Flex>
+                    <OneThirdFlex>
+                        <Title>You're In.</Title>
+                        <br/>
+                        <SubTitle>Share Your Ticket to Social Media to jazz up the concert!</SubTitle>
+                        <LinkButton>COPY TICKET URL</LinkButton>
+                    </OneThirdFlex>
+                    <TwoThirdFlex ref={this.parentRef}>
+                        <TicketContainer ref={this.childRef}>
                             <YFlex>
+                                <PureFlex>
+                                <Avatar><img src="https://github.com/aryasurya21.png" alt="aryasurya21"/></Avatar>
                                 <LeftSpace>
-                                    <SubTitle>{this.state.eventName}</SubTitle>
-                                    <SmallSubtitle>Venue : {this.state.venueName}</SmallSubtitle>
-                                    <SmallSubtitle>Date  : {this.state.eventDate}</SmallSubtitle>
+                                    <SmallTitle>{this.state.name}</SmallTitle>
+                                    <br/>
+                                    <SmallSubtitle>{this.state.email}</SmallSubtitle>
                                 </LeftSpace>
+                                </PureFlex>
+                                <YFlex>
+                                    <LeftSpace>
+                                        <SubTitle>{this.state.eventName}</SubTitle>
+                                        <SmallSubtitle>Venue : {this.state.venueName}</SmallSubtitle>
+                                        <SmallSubtitle>Date  : {this.state.eventDate}</SmallSubtitle>
+                                    </LeftSpace>
+                                </YFlex>
+                                <XFlex>
+                                    <Button><FaFacebook/>&nbsp;&nbsp;Facebook</Button>
+                                    <Button><FaInstagram/>&nbsp;&nbsp;Instagram</Button>
+                                    <Button><FaTwitter/>&nbsp;&nbsp;Tweet</Button>   
+                                </XFlex>
                             </YFlex>
-                            <XFlex>
-                                <Button><FaFacebook/>&nbsp;&nbsp;Facebook</Button>
-                                <Button><FaInstagram/>&nbsp;&nbsp;Share on Instagram</Button>
-                                <Button><FaTwitter/>&nbsp;&nbsp;Tweet it!</Button>   
-                            </XFlex>
-                        </YFlex>
-                        <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>
-                    </TicketContainer>
-                </TwoThirdFlex>
-            </Flex>
+                            <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>
+                        </TicketContainer>
+                    </TwoThirdFlex>
+                </Flex>
             </Background>
         )
     }
