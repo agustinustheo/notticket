@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logoImg from '../../../src/noticket.png'
+import logoImg from '../../../src/notticket.png'
 import styles from '../../app/style.css'
 import {Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -10,7 +10,6 @@ export default class LoginPage extends Component {
             <div className="Login">
 
             <div className="containerZ">
-                {/* <div className="header">Login</div> */}
                 <div className="content">
                     <div className="image">
                         <img src={logoImg} alt="logo"></img>

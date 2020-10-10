@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logoImg from '../../../src/noticket.png'
+import logoImg from '../../../src/notticket.png'
 import styles from '../../app/style.css'
 import {Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,6 @@ export default class RegisterPage extends Component {
         return(
             <div className="App">
             <div className="Login">
-
             <div className="containerZ">
                 <div className="content">
                     <div className="image">
@@ -37,7 +36,6 @@ export default class RegisterPage extends Component {
                 </Button>
                 </div>
                 </div>
-              
             </div>
             </div>
         )
