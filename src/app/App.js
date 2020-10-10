@@ -3,7 +3,7 @@ import '../app/App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginPage from './pages/login';
 import TicketPage from './pages/ticket';
-import EventDetailPage from './pages/event';
+import EventDetailPage from './pages/eventdetail';
 import RegisterPage from './pages/register';
 import bootstrap from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 

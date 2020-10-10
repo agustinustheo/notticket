@@ -179,41 +179,41 @@ export default class TicketPage extends Component {
     render(){
         return(
             <Background>
-            <Flex>
-                <OneThirdFlex>
-                    <Title>You're In.</Title>
-                    <br/>
-                    <SubTitle>Share Your Ticket to Social Media to jazz up the concert!</SubTitle>
-                    <LinkButton>COPY TICKET URL</LinkButton>
-                </OneThirdFlex>
-                <TwoThirdFlex>
-                    <TicketContainer>
-                        <YFlex>
-                            <PureFlex>
-                            <Avatar><img src="https://github.com/aryasurya21.png" alt="aryasurya21"/></Avatar>
-                            <LeftSpace>
-                                <SmallTitle>{this.state.name}</SmallTitle>
-                                <br/>
-                                <SmallSubtitle>{this.state.email}</SmallSubtitle>
-                            </LeftSpace>
-                            </PureFlex>
+                <Flex>
+                    <OneThirdFlex>
+                        <Title>You're In.</Title>
+                        <br/>
+                        <SubTitle>Share Your Ticket to Social Media to jazz up the concert!</SubTitle>
+                        <LinkButton>COPY TICKET URL</LinkButton>
+                    </OneThirdFlex>
+                    <TwoThirdFlex>
+                        <TicketContainer>
                             <YFlex>
+                                <PureFlex>
+                                <Avatar><img src="https://github.com/aryasurya21.png" alt="aryasurya21"/></Avatar>
                                 <LeftSpace>
-                                    <SubTitle>{this.state.eventName}</SubTitle>
-                                    <SmallSubtitle>Venue : {this.state.venueName}</SmallSubtitle>
-                                    <SmallSubtitle>Date  : {this.state.eventDate}</SmallSubtitle>
+                                    <SmallTitle>{this.state.name}</SmallTitle>
+                                    <br/>
+                                    <SmallSubtitle>{this.state.email}</SmallSubtitle>
                                 </LeftSpace>
-                            </YFlex>
-                            <XFlex>
+                                </PureFlex>
+                                <YFlex>
+                                    <LeftSpace>
+                                        <SubTitle>{this.state.eventName}</SubTitle>
+                                        <SmallSubtitle>Venue : {this.state.venueName}</SmallSubtitle>
+                                        <SmallSubtitle>Date  : {this.state.eventDate}</SmallSubtitle>
+                                    </LeftSpace>
+                                </YFlex>
+                                <XFlex>
                                 <Button><FaFacebook/>&nbsp;&nbsp;Facebook</Button>
                                 <Button><FaInstagram/>&nbsp;&nbsp;Instagram</Button>
                                 <Button><FaTwitter/>&nbsp;&nbsp;Tweet</Button>   
-                            </XFlex>
-                        </YFlex>
-                        <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>
-                    </TicketContainer>
-                </TwoThirdFlex>
-            </Flex>
+                                </XFlex>
+                            </YFlex>
+                            <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>
+                        </TicketContainer>
+                    </TwoThirdFlex>
+                </Flex>
             </Background>
         )
     }
