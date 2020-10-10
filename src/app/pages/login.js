@@ -86,6 +86,7 @@ function Login(){
                     </div>
                     <div className="form">
                         <div className="form-group">
+                            <label htmlFor="email">Email</label>
                             <input id="email" type="text" name="email" placeholder="Enter Your email"  
                             value={email}
                             onChange={e => {
@@ -93,10 +94,10 @@ function Login(){
                             }}></input>
                         </div>
                         <div className="form-group">
+                            <label htmlFor="password">Password</label>
                             <input id="password" type="password" name="password" placeholder="Enter Your Password"></input>
                         </div>
-                        <p style={{color:"black", "fontSize": "1.3rem"}}>Dont have an Account? <Link to="/register">Sign Up Here</Link></p>
-                    </div>
+                </div>
                     <div className="loaderClass">
                         {isLoaded ? 
                     <LoadingContainer style={{"opacity": "0", "display": "none"}}><Loader/></LoadingContainer> :
@@ -106,6 +107,7 @@ function Login(){
                 <Button onClick={postLogin}>
                     LOGIN
                 </Button>
+                <p style={{color:"black", "fontSize": "1.3rem"}}>Don't have an Account? <Link to="/register">Sign Up Here</Link></p>
                 </div>
             </div>
             </div>

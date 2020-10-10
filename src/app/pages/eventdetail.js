@@ -39,7 +39,6 @@ const OneThirdFlex = styled.div`
 
 const TwoThirdFlex = styled.div`
     padding:1rem;
-    border: solid 1px #FFC20F;
     position:relative;
     flex:2;
     background: black;
