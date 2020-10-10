@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logoImg from '../../../src/noticket.png'
-import styles from '../../app/style.css'
 import {Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 export default class RegisterPage extends Component {

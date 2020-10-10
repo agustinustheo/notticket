@@ -5,7 +5,6 @@ import LoginPage from './pages/login';
 import TicketPage from './pages/ticket';
 import EventDetailPage from './pages/eventdetail';
 import RegisterPage from './pages/register';
-import bootstrap from '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (

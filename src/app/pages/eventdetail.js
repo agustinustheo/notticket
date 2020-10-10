@@ -148,7 +148,7 @@ export default class EventDetailPage extends Component {
         return(
             <Background>
                 <Flex>
-                    <OneThirdFlex><img src={backgroundarya} alt="Concert Image"/></OneThirdFlex>
+                    <OneThirdFlex><img src={backgroundarya} alt="Concert"/></OneThirdFlex>
                     <TwoThirdFlex>
                         <TitleContainer><SmallTitle>{this.state.eventName}</SmallTitle></TitleContainer>
                         <FlexContainer>
