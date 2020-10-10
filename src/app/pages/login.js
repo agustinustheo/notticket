@@ -1,7 +1,6 @@
 import React, {useState } from 'react'
 import logoImg from '../../../src/notticket.png'
 import styles from '../../app/style.css'
-import {Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Axios from 'axios' 
 import { BaseURL } from "../constant/variables";
@@ -17,6 +16,27 @@ const LoadingContainer = styled.div`
     align-items: center;
     z-index: 99;
     position: fixed;
+`
+
+
+const Button = styled.div`
+    display:flex;
+    align-items:center;
+    border: solid 2px #FFC20F;
+    margin:1rem;
+    width: 100%;
+    padding: 1rem;
+    background:#FFC20F;
+    justify-content: center;
+    font-size:2rem;
+    border-radius:10px;
+    transition: all .5s;
+
+    &:hover {
+        background: #FFC20F;
+        color: black;
+        cursor: pointer;
+    }
 `
 
 function Login(){
@@ -59,13 +79,13 @@ function Login(){
             <div className="Login">
             <div className="containerZ">
                 <div className="content">
-               
                     <div className="image">
-                        <img src={logoImg} alt="logo"></img>
+                        <div style={{"textAlign": "center"}}>
+                            <img id="imgnya" src={logoImg} alt="logo"></img>
+                        </div>
                     </div>
                     <div className="form">
                         <div className="form-group">
-                            <label htmlFor="email">Email</label>
                             <input id="email" type="text" name="email" placeholder="Enter Your email"  
                             value={email}
                             onChange={e => {
@@ -73,10 +93,9 @@ function Login(){
                             }}></input>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="Password">Password</label>
                             <input id="password" type="password" name="password" placeholder="Enter Your Password"></input>
                         </div>
-                        <h5 style={{color:"white"}}>Dont have an Account? <Link to="/register">Sign Up Here</Link></h5>
+                        <p style={{color:"black", "fontSize": "1.3rem"}}>Dont have an Account? <Link to="/register">Sign Up Here</Link></p>
                     </div>
                     <div className="loaderClass">
                         {isLoaded ? 
@@ -84,15 +103,13 @@ function Login(){
                     <LoadingContainer style={{"opacity": "1", "display": "flex"}}><Loader/></LoadingContainer>  }
                     </div>
                 </div>
-                <div className="footer">
-                <Button variant="warning" size="lg" block onClick={postLogin}>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                <Button onClick={postLogin}>
+                    LOGIN
                 </Button>
                 </div>
-                </div>
-              
             </div>
             </div>
         )
 }
-    export default Login
+    
+export default Login

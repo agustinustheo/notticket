@@ -32,6 +32,7 @@ const TwoThirdFlex = styled.div`
     height: 100%;
     display:flex;
     flex-direction: column;
+    perspective: 4rem;
 `
 
 const Title = styled.h2`
@@ -170,8 +171,9 @@ export default class TicketPage extends Component {
             venueName: "Zoom",
             link: "https://zoom"
         }
+        
     }
-
+  
     componentDidMount(){
         //TODO : HIT API
     }
@@ -186,8 +188,8 @@ export default class TicketPage extends Component {
                         <SubTitle>Share Your Ticket to Social Media to jazz up the concert!</SubTitle>
                         <LinkButton>COPY TICKET URL</LinkButton>
                     </OneThirdFlex>
-                    <TwoThirdFlex>
-                        <TicketContainer>
+                    <TwoThirdFlex ref={this.parentRef}>
+                        <TicketContainer ref={this.childRef}>
                             <YFlex>
                                 <PureFlex>
                                 <Avatar><img src="https://github.com/aryasurya21.png" alt="aryasurya21"/></Avatar>
@@ -205,9 +207,9 @@ export default class TicketPage extends Component {
                                     </LeftSpace>
                                 </YFlex>
                                 <XFlex>
-                                <Button><FaFacebook/>&nbsp;&nbsp;Facebook</Button>
-                                <Button><FaInstagram/>&nbsp;&nbsp;Instagram</Button>
-                                <Button><FaTwitter/>&nbsp;&nbsp;Tweet</Button>   
+                                    <Button><FaFacebook/>&nbsp;&nbsp;Facebook</Button>
+                                    <Button><FaInstagram/>&nbsp;&nbsp;Instagram</Button>
+                                    <Button><FaTwitter/>&nbsp;&nbsp;Tweet</Button>   
                                 </XFlex>
                             </YFlex>
                             <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>

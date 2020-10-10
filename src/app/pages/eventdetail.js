@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import backgroundarya from '../assets/background.jpg';
 import { MdDateRange, MdLocationOn, MdAttachMoney } from "react-icons/md";
+import { withRouter } from 'react-router-dom';
 
 const Flex = styled.div`
+    color: white;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -19,13 +21,6 @@ const Flex = styled.div`
     justify-content: center;   
 `
 
-const Background = styled.div`
-    height:100vh;
-    width:100vw;
-    overflow-y:hidden;
-    background: black;
-    color: white;
-`
 const OneThirdFlex = styled.div`
     flex:1;
     height: 100%;
@@ -125,9 +120,10 @@ const XFlex = styled.div`
     width:100%;
 `
 
-export default class EventDetailPage extends Component {
+class EventDetailPage extends Component {
     constructor(props){
         super(props)
+      
         this.state = {
             name: "Arya",
             email: "arya.surya021@gmail.com",
@@ -141,12 +137,16 @@ export default class EventDetailPage extends Component {
     }
 
     componentDidMount(){
-        //TODO : HIT API
+        const id = this.props.match.params.id
+        this.fetchData(id)
+    }
+
+    async fetchData(id){
+        let response = await fetch("")
     }
 
     render(){
         return(
-            <Background>
                 <Flex>
                     <OneThirdFlex><img src={backgroundarya} alt="Concert"/></OneThirdFlex>
                     <TwoThirdFlex>
@@ -158,13 +158,15 @@ export default class EventDetailPage extends Component {
                             <XFlex>
                                 <Button>#Mama</Button> 
                                 <Button>#LastConcerto</Button> 
-                                <Button>#212</Button>
+                                <Button>#Concert Mama</Button>
                             </XFlex>
                         </FlexContainer>
                         <LinkButton>CHECK OUT</LinkButton>
                     </TwoThirdFlex>
                 </Flex>
-            </Background>
+          
         )
     }
 }
+
+export default withRouter(EventDetailPage);
