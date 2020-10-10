@@ -206,8 +206,8 @@ export default class TicketPage extends Component {
                             </YFlex>
                             <XFlex>
                                 <Button><FaFacebook/>&nbsp;&nbsp;Facebook</Button>
-                                <Button><FaInstagram/>&nbsp;&nbsp;Share on Instagram</Button>
-                                <Button><FaTwitter/>&nbsp;&nbsp;Tweet it!</Button>   
+                                <Button><FaInstagram/>&nbsp;&nbsp;Instagram</Button>
+                                <Button><FaTwitter/>&nbsp;&nbsp;Tweet</Button>   
                             </XFlex>
                         </YFlex>
                         <LeftBorderedFlex><Rotated>No 1A32843</Rotated></LeftBorderedFlex>
