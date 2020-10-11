@@ -1,2 +1,2 @@
-export const BaseURL = "https://nottiketcom.xyz"
+export const BaseURL = "https://api.nottiketcom.xyz"
 

@@ -1,8 +1,22 @@
-import React, { Component } from 'react'
-import logoImg from '../../app/assets/noticket.png'
-import styles from '../../app/style.css'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import styles from '../../app/style.css'
+import { withRouter } from 'react-router-dom'
+import { BaseURL } from "../constant/variables"
+import Loader from "../pages/components/loader"
+import logoImg from '../../../src/notticket.png'
+import { showAlert } from '../constant/functions'
+
+const LoadingContainer = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
+    height: 100%;
+    align-items: center;
+    z-index: 99;
+    position: fixed;
+`
 
 const Button = styled.div`
     display:flex;
@@ -25,13 +39,74 @@ const Button = styled.div`
 `
 
 
-export default class RegisterPage extends Component {
+class RegisterPage extends Component {
+    constructor(){
+        super()
 
-    register(){
-
+        this.state = {
+            isLoaded: true,
+            email: "",
+            username: ""
+        }
     }
 
+    push = (path) => {
+        this.props.history.push(path)
+    }
+
+    setIsLoaded = (type) => {
+        this.setState({isLoaded: type})
+    }
+
+    setEmail = (email) => {
+        this.setState({email: email})   
+    }
+
+    setUsername = (username) => {
+        this.setState({username: username})   
+    }
+
+    postRegister = () => {
+        let email = document.getElementById('email').value
+        let username = document.getElementById('username').value
+        let password = document.getElementById('password').value
+ 
+        if(email.length === 0 || password.lengt === 0){
+            showAlert("Email and password must be filled",0)
+        }
+        else{
+            this.setIsLoaded(false)
+            const token = Buffer.from(`${email}:${password}`, 'utf8').toString('base64')
+        
+            var config = 
+            { 
+                method: 'GET', 
+                headers: { 
+                    'Authorization': `Basic ${token}`,
+                    'Content-type': 'application/json'
+                }
+            }
+
+            fetch(`${BaseURL}/user/create`, config)
+            .then(response => {
+                if(response.status === 200){
+                    showAlert("Success", 1)
+                    this.setIsLoaded(true)
+                    this.push("/otp")
+                }
+            }).catch(err => {
+                console.log(err)
+                this.setIsLoaded(true)
+                showAlert("Error", 0)
+            })
+        }
+     }
+
     render(){
+        let email = this.state.email
+        let username = this.state.username
+        let isLoaded = this.state.isLoaded
+        
         return(
             <div className="App">
             <div className="Login">
@@ -43,21 +118,34 @@ export default class RegisterPage extends Component {
                         </div>
                     </div>
                     <div className="form">
-                    <div className="form-group">
-                            <label htmlFor="Email">Email</label>
-                            <input type="text" name="email" placeholder="Enter Your Email"></input>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input id="email" type="text" name="email" placeholder="Enter Your email"  
+                            value={email}
+                            onChange={e => {
+                                this.setEmail(e.target.value)
+                            }}></input>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="Username">Username</label>
-                            <input type="text" name="username" placeholder="Enter Your Username"></input>
+                            <label htmlFor="username">Username</label>
+                            <input id="username" type="text" name="username" placeholder="Enter Your Username"  
+                            value={username}
+                            onChange={e => {
+                                this.setUsername(e.target.value)
+                            }}></input>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="Password">Password</label>
-                            <input type="password" name="password" placeholder="Enter Your Password"></input>
+                        <div className="form-group">x
+                            <label htmlFor="password">Password</label>
+                            <input id="password" type="password" name="password" placeholder="Enter Your Password"></input>
                         </div>
                     </div>
+                    <div className="loaderClass">
+                        {isLoaded ? 
+                            <LoadingContainer style={{"opacity": "0", "display": "none"}}><Loader/></LoadingContainer> :
+                            <LoadingContainer style={{"opacity": "1", "display": "flex"}}><Loader/></LoadingContainer>  }
+                    </div>
                 </div>
-                <Button onClick={this.register}>
+                <Button onClick={this.postRegister}>
                     REGISTER
                 </Button>
                 <p style={{color:"black", "fontSize": "1.3rem"}}>Have an Account? <Link to="/login">Sign In Here</Link></p>
@@ -67,3 +155,5 @@ export default class RegisterPage extends Component {
         )
     }
 }
+    
+export default withRouter(RegisterPage)
