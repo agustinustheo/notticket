@@ -1,7 +1,7 @@
 import React, { useState, Component } from 'react'
 import styled from "styled-components";
 import styles from '../../app/style.css'
-import Loader from "./components/loader";
+import Loader from "../components/loader";
 import { BaseURL } from "../constant/variables";
 import logoImg from '../../../src/notticket.png'
 import { showAlert } from '../constant/functions';

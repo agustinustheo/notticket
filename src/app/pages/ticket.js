@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { BaseURL } from '../constant/variables'
-import Loader from "../pages/components/loader";
+import Loader from "../components/loader";
 
 const Flex = styled.div`
     position: absolute;

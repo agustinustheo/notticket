@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from '../../app/style.css'
 import { withRouter } from 'react-router-dom'
 import { BaseURL } from "../constant/variables"
-import Loader from "../pages/components/loader"
+import Loader from "../components/loader"
 import logoImg from '../../../src/notticket.png'
 import { showAlert } from '../constant/functions'
 import React, { Component } from 'react'
