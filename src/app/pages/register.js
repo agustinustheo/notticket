@@ -50,8 +50,11 @@ class RegisterPage extends Component {
         }
     }
 
-    push = (path) => {
-        this.props.history.push(path)
+    push = (path, data) => {
+        this.props.history.push({
+            pathname: path,
+            state: data
+        })
     }
 
     setIsLoaded = (type) => {
@@ -80,20 +83,28 @@ class RegisterPage extends Component {
         
             var config = 
             { 
-                method: 'GET', 
+                method: 'POST', 
                 headers: { 
                     'Authorization': `Basic ${token}`,
                     'Content-type': 'application/json'
-                }
+                },
+                body: JSON.stringify({username: username})
             }
 
             fetch(`${BaseURL}/user/create`, config)
             .then(response => {
                 if(response.status === 200){
-                    showAlert("Success", 1)
-                    this.setIsLoaded(true)
-                    this.push("/otp")
+                    response.json().then(data => {
+                        console.log(data)
+                        if(data.login_status){
+                            showAlert("Success", 1)
+                            this.setIsLoaded(true)
+                            this.push("/otp", { id: data.user_id })
+                        }
+                    })
                 }
+                
+                throw new Error('Something went wrong.')
             }).catch(err => {
                 console.log(err)
                 this.setIsLoaded(true)

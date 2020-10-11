@@ -6,7 +6,7 @@ import { BaseURL } from "../constant/variables"
 import Loader from "../pages/components/loader"
 import logoImg from '../../../src/notticket.png'
 import { showAlert } from '../constant/functions'
-import React, { useState, Component } from 'react'
+import React, { Component } from 'react'
 
 const LoadingContainer = styled.div`
     width:100%;
@@ -49,8 +49,12 @@ class LoginPage extends Component {
         }
     }
 
-    push = (path) => {
-        this.props.history.push(path)
+    push = (path, data) => {
+        console.log(data)
+        this.props.history.push({
+            pathname: path,
+            state: data
+        })
     }
 
     setIsLoaded = (type) => {
@@ -85,10 +89,17 @@ class LoginPage extends Component {
             fetch(`${BaseURL}/user/login`, config)
             .then(response => {
                 if(response.status === 200){
-                    showAlert("Success", 1)
-                    this.setIsLoaded(true)
-                    this.push("/otp")
+                    response.json().then(data => {
+                        console.log(data)
+                        if(data.login_status){
+                            showAlert("Success", 1)
+                            this.setIsLoaded(true)
+                            this.push("/otp", { id: data.user_id })
+                        }
+                    })
                 }
+                
+                throw new Error('Something went wrong.')
             }).catch(err => {
                 console.log(err)
                 this.setIsLoaded(true)
