@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { BaseURL } from '../constant/variables'
 import Loader from "../components/loader";
+import { withRouter } from 'react-router-dom';
 
 const Flex = styled.div`
     position: absolute;
@@ -260,7 +261,7 @@ const FullBorder = styled.div`
 `
 
 
-export default class TicketPage extends Component {
+class TicketPage extends Component {
     
     constructor(props){
         super(props)
@@ -280,7 +281,7 @@ export default class TicketPage extends Component {
             this.setState({
                 isLoading: true
             })
-            let id = this.props.history.location.state.cartID
+            const id = this.props.match.params.id
             let response = await fetch(`${BaseURL}/checkout/history/id`, { 
                 method: 'POST', 
                 body: JSON.stringify({id: id}),
@@ -378,3 +379,5 @@ export default class TicketPage extends Component {
         )
     }
 }
+
+export default withRouter(TicketPage);

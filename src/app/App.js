@@ -33,7 +33,9 @@ function App() {
           <Route path="/cart/:id">
             <EventDetailPage/>
           </Route>
-          <Route path="/ticket" render={(props) => <TicketPage {...props}/>}/>
+          <Route path="/ticket/:id">
+            <TicketPage/>
+          </Route>
           <Route path="/">
             <LoginPage/>
           </Route>

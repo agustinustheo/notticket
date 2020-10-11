@@ -61,7 +61,7 @@ const Title = styled.h2`
 
 const OneThirdFlex = styled.div`
     width: 300px;
-    height: 90%;
+    height: 100%;
     background-image: url("${backgroundarya}");
     background-repeat: no-repeat;
     background-size: cover;
@@ -78,7 +78,7 @@ const TwoThirdFlex = styled.div`
     padding:1rem;
     position:relative;
     background: black;
-    height: 90%;
+    height: 100%;
     display:flex;
     flex-direction: column;
     justify-content: space-between;
@@ -245,7 +245,7 @@ class EventDetailPage extends Component {
             })
             if(response.status != 200){
                 this.setState({
-                    "textTitle": `Oops, we didn't catch that. Please try again :(`
+                    "textTitle": `Oops, we didn't catch that.\nPlease try again :(`
                 })
             } else {
                 this.setState({
@@ -270,6 +270,7 @@ class EventDetailPage extends Component {
     }
 
     async handleCheckOut(cartID){
+        console.log("cartID"+cartID)
         this.setState({
             "isLoading": true
         })
@@ -282,22 +283,27 @@ class EventDetailPage extends Component {
             let decodedResponse = await response.json();
             await showAlert("Success", 1).then((_) => {
                 this.props.history.push({
-                    pathname: "/ticket",
-                    state: {
-                        cartID: decodedResponse.id
-                    }
+                    pathname: `/ticket/${decodedResponse.id}`
                 })
             })
             this.setState({
-                "isLoading": false
+                "isLoading": false,
+                "isError": false
             })
-        } 
+        }  else {
+            this.setState({
+                "isLoading": false,
+                "isError": true
+            })
+        }
     }
 
     render(){
         return(
             this.state.isLoading ?<LoadingContainer><Loader/></LoadingContainer>  :
-            this.state.isError ? <LoadingContainer><Title>{this.state.textTitle}</Title></LoadingContainer> :
+            this.state.isError ? <LoadingContainer><Title>{this.state.textTitle.split('\n').map((item,i)=> {
+                return <p key={i}>{item}</p>
+            })}</Title></LoadingContainer> :
             <RelativeRoot>
             <Title>{this.state.textTitle}</Title>
             <FlexContainerRoot>
