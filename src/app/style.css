@@ -115,3 +115,34 @@
           min-width: 25em;
         }
       }
+
+      .row{
+        text-align: left;
+        width: 100%;
+        display: block;
+      }
+      
+      .half-row{
+        display: inline-block;
+        width: 48%;
+        padding: 1%;
+        float: left;
+      }
+
+      .half-row0{
+        display: inline-block;
+        width: 48%;
+        float: left;
+      }
+
+
+
+      @media only screen and (max-width: 600px) {
+        .half-row{
+          display: block;
+          width: 100%;
+          padding: 1%;
+          float: left;
+      }
+    }
+  
