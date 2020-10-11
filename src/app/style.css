@@ -92,15 +92,75 @@
         background-color: white;
         box-shadow: 0 .5rem 1rem .2rem black;;
         border-radius: 25px;
-        /* position: absolute; */
         position: relative;
         z-index: 99;
         padding: 5rem;
-        /* top:50%;
-        left:50%; */
-        /* width: 21%; */
-        /* transform:translate(-50%,-50%); */
-        
+        transition: all .4s ease;
+      }
+
+      @media screen and (min-width: 1120px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 700px;
+        }
+        input{
+          min-width: 25em;
+        }
+      }
+      @media screen and (min-width: 770px) and (max-width: 1120px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 600px;
+        }
+        input{
+          min-width: 25em;
+        }
+      }
+      @media screen and (min-width: 550px) and (max-width: 770px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 490px;
+        }
+        input{
+          min-width: 22em;
+        }
+      }
+      @media screen and (min-width: 470px) and (max-width: 550px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 450px;
+        }
+        input{
+          min-width: 20em;
+        }
+      }
+      @media screen and (min-width: 420px) and (max-width: 470px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 400px;
+        }
+        input{
+          min-width: 18em;
+        }
+      }
+      @media screen and (min-width: 360px) and (max-width: 420px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 340px;
+        }
+        input{
+          min-width: 16em;
+        }
+      }
+      @media screen and (min-width: 320px) and (max-width: 360px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 310px;
+        }
+        input{
+          min-width: 15em;
+        }
+      }
+      @media screen and (max-width: 320px) {
+        .containerZ, .containerZ > .content > .form {
+          width: 300px;
+        }
+        input{
+          min-width: 13em;
+        }
       }
 
       .loaderClass{

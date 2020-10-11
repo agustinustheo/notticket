@@ -49,24 +49,28 @@ const Title = styled.h2`
     font-size: 9rem;
     color: white;
     padding-top: 10rem;
+    height: 220px;
+    transition: all .4s ease;
+
+    @media (max-width: 500px) {
+        padding-top: 0rem;
+        opacity: 0;
+        height: 0px;
+    }
 `
 
 const OneThirdFlex = styled.div`
-    flex:.8;
+    width: 300px;
     height: 90%;
-    align-items:center;
-    flex-direction: column;
-  
-    & img {
-        height: 100%;
-        width: 105%;
-        background-size:auto;
-        border-radius: 30px;
-        z-index:-9;
-    }
-
-    @media (max-width: 500px){
-       display:none;
+    background-image: url("${backgroundarya}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 30px 0px 0px 30px;
+    transition: all .3s ease;
+    
+    @media (max-width: 770px){
+        opacity: 0;
+        width: 0px;
     }
 `
 
@@ -78,12 +82,32 @@ const TwoThirdFlex = styled.div`
     display:flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: all .4s ease;
 
-    @media (max-width: 500px) {
-       flex:1;
-       border: solid 2px #FFC20F;
-       border-radius: 30px;
-       height: 100%;
+    @media (max-width: 770px){
+        border: solid 2px #FFC20F;
+        border-radius: 30px;
+        height: 100%;
+        flex: 1;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 770px) {
+        width: 490px;
+    }
+    @media screen and (min-width: 470px) and (max-width: 550px) {
+        width: 450px;
+    }
+    @media screen and (min-width: 420px) and (max-width: 470px) {
+        width: 400px;
+    }
+    @media screen and (min-width: 360px) and (max-width: 420px) {
+        width: 340px;
+    }
+    @media screen and (min-width: 320px) and (max-width: 360px) {
+        width: 310px;
+    }
+    @media screen and (max-width: 320px) {
+        width: 300px;
     }
 `
 
@@ -176,7 +200,7 @@ const XFlex = styled.div`
     display:flex;
     width:100%;
 
-    @media (max-width: 500px) {
+    @media (max-width: 550px) {
         margin-top:1rem;
         justify-content:center;
         flex-direction: column;
@@ -190,7 +214,8 @@ const XFlex = styled.div`
 const RelativeRoot = styled.div`
     position: relative;
     width:100vw;
-    height:100%;
+    display: inline-block;
+    overflow-x: hidden;
 `
 class EventDetailPage extends Component {
     constructor(props){
@@ -277,7 +302,7 @@ class EventDetailPage extends Component {
             <Title>{this.state.textTitle}</Title>
             <FlexContainerRoot>
                 <Flex>
-                    <OneThirdFlex><img src={backgroundarya} alt="Concert"/></OneThirdFlex>
+                    <OneThirdFlex/>
                     <TwoThirdFlex>
                         <TitleContainer><SmallTitle>{this.state.event.name}</SmallTitle></TitleContainer>
                         <FlexContainer>
@@ -295,7 +320,6 @@ class EventDetailPage extends Component {
                         <LinkButton onClick={() => this.handleCheckOut(this.state.id)}>CHECK OUT</LinkButton>
                     </TwoThirdFlex>
                 </Flex>
-            )
             </FlexContainerRoot>   
             </RelativeRoot>
         )
