@@ -91,8 +91,9 @@ class OTPPage extends Component {
                         this.setIsLoaded(true)
                     })
                 }
-                
-                throw new Error('Something went wrong.')
+                else{
+                    throw new Error('Something went wrong.')
+                }
             }).catch(err => {
                 console.log(err)
                 this.setIsLoaded(true)
