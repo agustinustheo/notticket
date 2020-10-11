@@ -94,7 +94,7 @@ class LoginPage extends Component {
                         if(data.login_status){
                             showAlert("Success", 1)
                             this.setIsLoaded(true)
-                            this.push("/otp", { id: data.user_id })
+                            this.push("/otp", { id: data.id })
                         }
                     })
                 }
