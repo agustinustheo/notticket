@@ -50,7 +50,6 @@ class LoginPage extends Component {
     }
 
     push = (path, data) => {
-        console.log(data)
         this.props.history.push({
             pathname: path,
             state: data
@@ -90,7 +89,6 @@ class LoginPage extends Component {
             .then(response => {
                 if(response.status === 200){
                     response.json().then(data => {
-                        console.log(data)
                         if(data.login_status){
                             showAlert("Success", 1)
                             this.setIsLoaded(true)

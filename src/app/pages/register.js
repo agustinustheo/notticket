@@ -95,7 +95,6 @@ class RegisterPage extends Component {
             .then(response => {
                 if(response.status === 200){
                     response.json().then(data => {
-                        console.log(data)
                         showAlert("Success", 1)
                         this.setIsLoaded(true)
                         this.push("/otp", { id: data.id })

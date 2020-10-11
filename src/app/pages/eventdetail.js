@@ -4,13 +4,19 @@ import backgroundarya from '../assets/background.jpg';
 import { MdDateRange, MdLocationOn, MdAttachMoney } from "react-icons/md";
 import { withRouter } from 'react-router-dom';
 import { BaseURL } from '../constant/variables';
+import { showAlert } from '../constant/functions';
 import Loader from '../components/loader';
 
 const FlexContainerRoot = styled.div`
     max-width: 100%;
     display:flex;
-    flex-wrap: wrap;
+    width:100%;
+    justify-content: center;
     padding: 5rem;
+
+    @media (max-width: 50px0){
+        padding: 1rem;
+    }
 `
 
 const LoadingContainer = styled.div`
@@ -26,16 +32,13 @@ const LoadingContainer = styled.div`
 
 const Flex = styled.div`
     color: white;
-    flex:3;
-    flex-basis: 33%;
-    width: 100%;
     display:flex;
     border-radius: 30px;
     align-items:center;
     justify-content: center;
     margin:2rem;  
     
-    @media (max-width: 375px) {
+    @media (max-width: 500px){
         margin: .3rem;
         margin-bottom:3rem;
     }
@@ -49,19 +52,20 @@ const Title = styled.h2`
 `
 
 const OneThirdFlex = styled.div`
-    flex:1;
-    height: 100%;
+    flex:.8;
+    height: 90%;
     align-items:center;
     flex-direction: column;
-    
+  
     & img {
         height: 100%;
-        width: 100%;
+        width: 105%;
         background-size:auto;
         border-radius: 30px;
+        z-index:-9;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 500px){
        display:none;
     }
 `
@@ -69,24 +73,24 @@ const OneThirdFlex = styled.div`
 const TwoThirdFlex = styled.div`
     padding:1rem;
     position:relative;
-    flex:2;
     background: black;
-    height: 100%;
+    height: 90%;
     display:flex;
     flex-direction: column;
     justify-content: space-between;
 
-    @media (max-width: 375px) {
+    @media (max-width: 500px) {
        flex:1;
        border: solid 2px #FFC20F;
        border-radius: 30px;
+       height: 100%;
     }
 `
 
 const SmallTitle = styled.h2`
-    font-size: 3rem;
+    font-size: 4rem;
 
-    @media (max-width: 375px) {
+    @media (max-width: 500px) {
         margin:1rem auto;
     }
 `
@@ -110,7 +114,7 @@ const Item = styled.div`
     background:black;
     align-items: center;
 
-    @media (max-width: 375px){
+    @media (max-width: 500px){
         margin: .3rem;
         margin-bottom:1rem;
     }
@@ -120,6 +124,7 @@ const LinkButton = styled.button`
     border: solid 2px #FFC20F;
     background:#FFC20F;
     color:black;
+    font-weight: bold;
     padding:2rem;
     border-radius:10px;
     font-size:2rem;
@@ -132,7 +137,7 @@ const LinkButton = styled.button`
         cursor: pointer;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 500px) {
         margin: .3rem;
     }
 `
@@ -161,7 +166,7 @@ const Button = styled.div`
         cursor: pointer;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 500px){
         margin: .3rem;
         margin-bottom:1rem;
     }
@@ -171,10 +176,14 @@ const XFlex = styled.div`
     display:flex;
     width:100%;
 
-    @media (max-width: 375px) {
+    @media (max-width: 500px) {
         margin-top:1rem;
         justify-content:center;
         flex-direction: column;
+
+         & > div {
+             display:inline-block;
+         }
      }
 `
 
@@ -188,11 +197,13 @@ class EventDetailPage extends Component {
         super(props)
 
         this.state = {
+            id: "",
             name: "",
             email: "",
-            events : [],
+            event : [],
             isLoading: false,
-            isError: true
+            isError: true,
+            textTitle: ""
         }
     }
 
@@ -207,13 +218,23 @@ class EventDetailPage extends Component {
                 body: JSON.stringify({id:id}),
                 headers: { 'Content-type': 'application/json' }
             })
+            if(response.status != 200){
+                this.setState({
+                    "textTitle": `Oops, we didn't catch that. Please try again :(`
+                })
+            } else {
+                this.setState({
+                    "textTitle": "Your Cart."
+                })
+            }
             let decodedData = await response.json()
-            console.log(decodedData)
             this.setState({
+                id: decodedData.id,
                 name: decodedData.name,
                 email: decodedData.email,
-                events: decodedData.carts,
-                isLoading: false
+                event: decodedData.cart,
+                isLoading: false,
+                isError: false
             })
         }catch(err){
             this.setState({
@@ -223,45 +244,58 @@ class EventDetailPage extends Component {
         }
     }
 
-    handleCheckOut(eventID){
-        this.props.history.push({
-            pathname: "/ticket",
-            state: {
-                eventID
-            }
+    async handleCheckOut(cartID){
+        this.setState({
+            "isLoading": true
         })
+        let response = await fetch(BaseURL+"/checkout/history/create", { 
+            method: 'POST', 
+            body: JSON.stringify({id:cartID}),
+            headers: { 'Content-type': 'application/json' }
+        })
+        if(response.status == 200){
+            let decodedResponse = await response.json();
+            await showAlert("Success", 1).then((_) => {
+                this.props.history.push({
+                    pathname: "/ticket",
+                    state: {
+                        cartID: decodedResponse.id
+                    }
+                })
+            })
+            this.setState({
+                "isLoading": false
+            })
+        } 
     }
 
     render(){
         return(
             this.state.isLoading ?<LoadingContainer><Loader/></LoadingContainer>  :
+            this.state.isError ? <LoadingContainer><Title>{this.state.textTitle}</Title></LoadingContainer> :
             <RelativeRoot>
-            <Title>Your Carts.</Title>
+            <Title>{this.state.textTitle}</Title>
             <FlexContainerRoot>
-            {this.state.events.map((event) => {
-                return(
-                <Flex key={event.id}>
+                <Flex>
                     <OneThirdFlex><img src={backgroundarya} alt="Concert"/></OneThirdFlex>
                     <TwoThirdFlex>
-                        <TitleContainer><SmallTitle>{event.name}</SmallTitle></TitleContainer>
+                        <TitleContainer><SmallTitle>{this.state.event.name}</SmallTitle></TitleContainer>
                         <FlexContainer>
-                            <Item><SmallSubTitle><MdLocationOn/> {event.venue}</SmallSubTitle></Item>
-                            <Item><SmallSubTitle><MdDateRange/>  {event.date}</SmallSubTitle></Item>
-                            <Item><SmallSubTitle><MdAttachMoney/> {event.price}</SmallSubTitle></Item>
+                            <Item><SmallSubTitle><MdLocationOn/> {this.state.event.venue}</SmallSubTitle></Item>
+                            <Item><SmallSubTitle><MdDateRange/>  {this.state.event.date}</SmallSubTitle></Item>
+                            <Item><SmallSubTitle><MdAttachMoney/> {this.state.event.price}</SmallSubTitle></Item>
                             <XFlex>
                                 {
-                                    event.tags.map((tag)=> {
+                                    this.state.event.tags.map((tag)=> {
                                     return <Button key={tag}>{tag}</Button>
                                     })
                                 }
                             </XFlex>
                         </FlexContainer>
-                        <LinkButton onClick={() => this.handleCheckOut(event.id)}>CHECK OUT</LinkButton>
+                        <LinkButton onClick={() => this.handleCheckOut(this.state.id)}>CHECK OUT</LinkButton>
                     </TwoThirdFlex>
                 </Flex>
             )
-            })
-        }
             </FlexContainerRoot>   
             </RelativeRoot>
         )
