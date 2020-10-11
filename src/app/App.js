@@ -2,6 +2,7 @@ import React from 'react';
 import '../app/App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginPage from './pages/login';
+import OTPPage from './pages/otp';
 import TicketPage from './pages/ticket';
 import EventDetailPage from './pages/eventdetail';
 import RegisterPage from './pages/register';
@@ -25,6 +26,9 @@ function App() {
           </Route>
           <Route path="/register">
             <RegisterPage/>
+          </Route>
+          <Route path="/otp">
+            <OTPPage/>
           </Route>
           <Route path="/checkout/:id">
             <EventDetailPage/>

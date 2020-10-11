@@ -1,10 +1,10 @@
 import React, {useState } from 'react'
-import logoImg from '../../../src/notticket.png'
-import styles from '../../app/style.css'
-import { BaseURL } from "../constant/variables";
-import { showAlert } from '../constant/functions';
 import styled from "styled-components";
+import styles from '../../app/style.css'
 import Loader from "./components/loader";
+import { BaseURL } from "../constant/variables";
+import logoImg from '../../../src/notticket.png'
+import { showAlert } from '../constant/functions';
 
 const LoadingContainer = styled.div`
     width:100%;

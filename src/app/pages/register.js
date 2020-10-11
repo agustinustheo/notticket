@@ -1,11 +1,12 @@
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
+import styles from '../../app/style.css'
+import { withRouter } from 'react-router-dom'
+import { BaseURL } from "../constant/variables"
+import Loader from "../pages/components/loader"
 import logoImg from '../../../src/notticket.png'
 import { showAlert } from '../constant/functions'
-import { Link } from 'react-router-dom'
-import { BaseURL } from "../constant/variables"
-import styled from 'styled-components'
-import Loader from "../pages/components/loader"
-import { withRouter } from 'react-router-dom'
 
 const LoadingContainer = styled.div`
     width:100%;
