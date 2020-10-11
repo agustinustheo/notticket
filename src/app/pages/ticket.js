@@ -2,8 +2,22 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { BaseURL } from '../constant/variables'
-import Loader from "../pages/components/loader";
 import styles from '../../app/style.css'
+import Loader from "../components/loader";
+
+const Flex = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex:3;
+    width:80%;
+    margin: 0 auto;
+    display:flex;
+    height: 40rem;
+    align-items:center;
+    justify-content: center;   
+`
 
 const OneThirdFlex = styled.div`
 color:white;

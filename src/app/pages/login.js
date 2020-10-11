@@ -1,12 +1,12 @@
-import React, {useState } from 'react'
-import logoImg from '../../../src/notticket.png'
-import styles from '../../app/style.css'
+import styled from "styled-components"
 import { Link } from 'react-router-dom'
-import Axios from 'axios' 
-import { BaseURL } from "../constant/variables";
-import { showAlert } from '../constant/functions';
-import styled from "styled-components";
-import Loader from "../pages/components/loader";
+import styles from '../../app/style.css'
+import { withRouter } from 'react-router-dom'
+import { BaseURL } from "../constant/variables"
+import Loader from "../components/loader"
+import logoImg from '../../../src/notticket.png'
+import { showAlert } from '../constant/functions'
+import React, { Component } from 'react'
 
 const LoadingContainer = styled.div`
     width:100%;
@@ -39,41 +39,79 @@ const Button = styled.div`
     }
 `
 
-function Login(){
-    const [isLoaded, setIsLoaded] = useState(true)
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const postLogin = () =>{
-       let email = document.getElementById('email').value
-       let password = document.getElementById('password').value
+class LoginPage extends Component {
+    constructor(){
+        super()
 
-       if(email.length === 0 || password.lengt === 0){
-           showAlert("Email and password must be filled",0)
-       }
-       else{
-            setIsLoaded(false)
-            const token = Buffer.from(`${email}.${password}`, 'utf8').toString('base64')
+        this.state = {
+            isLoaded: true,
+            email: ""
+        }
+    }
+
+    push = (path, data) => {
+        console.log(data)
+        this.props.history.push({
+            pathname: path,
+            state: data
+        })
+    }
+
+    setIsLoaded = (type) => {
+        this.setState({isLoaded: type})
+    }
+
+    setEmail = (email) => {
+        this.setState({email: email})   
+    }
+
+    postLogin = () => {
+        let email = document.getElementById('email').value
+        let password = document.getElementById('password').value
+ 
+        if(email.length === 0 || password.lengt === 0){
+            showAlert("Email and password must be filled",0)
+        }
+        else{
+            this.setIsLoaded(false)
+            const token = Buffer.from(`${email}:${password}`, 'utf8').toString('base64')
         
-            var config = {
+            var config = 
+            { 
+                method: 'GET', 
                 headers: { 
-                'Authorization': `Basic ${token}`,
-                'Content-type': 'application/json'
+                    'Authorization': `Basic ${token}`,
+                    'Content-type': 'application/json'
                 }
             }
     
-            Axios.post(`${BaseURL}/user/login`,{
-                email,
-                password
-            }, config).then(response => {
-                console.log(response)
+
+            fetch(`${BaseURL}/user/login`, config)
+            .then(response => {
+                if(response.status === 200){
+                    response.json().then(data => {
+                        console.log(data)
+                        if(data.login_status){
+                            showAlert("Success", 1)
+                            this.setIsLoaded(true)
+                            this.push("/otp", { id: data.id })
+                        }
+                    })
+                }
+                
+                throw new Error('Something went wrong.')
             }).catch(err => {
-                setIsLoaded(true)
+                console.log(err)
+                this.setIsLoaded(true)
                 showAlert("Error", 0)
             })
-       }
-       
+        }
+     }
 
-    }
+    render(){
+        let email = this.state.email
+        let isLoaded = this.state.isLoaded
+        
         return(
             <div className="App">
             <div className="Login">
@@ -90,21 +128,21 @@ function Login(){
                             <input id="email" type="text" name="email" placeholder="Enter Your email"  
                             value={email}
                             onChange={e => {
-                                setEmail(e.target.value);
+                                this.setEmail(e.target.value)
                             }}></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
                             <input id="password" type="password" name="password" placeholder="Enter Your Password"></input>
                         </div>
-                </div>
+                    </div>
                     <div className="loaderClass">
                         {isLoaded ? 
-                    <LoadingContainer style={{"opacity": "0", "display": "none"}}><Loader/></LoadingContainer> :
-                    <LoadingContainer style={{"opacity": "1", "display": "flex"}}><Loader/></LoadingContainer>  }
+                            <LoadingContainer style={{"opacity": "0", "display": "none"}}><Loader/></LoadingContainer> :
+                            <LoadingContainer style={{"opacity": "1", "display": "flex"}}><Loader/></LoadingContainer>  }
                     </div>
                 </div>
-                <Button onClick={postLogin}>
+                <Button onClick={this.postLogin}>
                     LOGIN
                 </Button>
                 <p style={{color:"black", "fontSize": "1.3rem"}}>Don't have an Account? <Link to="/register">Sign Up Here</Link></p>
@@ -112,6 +150,7 @@ function Login(){
             </div>
             </div>
         )
+    }
 }
     
-export default Login
+export default withRouter(LoginPage)
